@@ -39,7 +39,7 @@ ostream &operator<<(ostream &out, BitSet s) {
 
 // 생성자함수와 나머지 연산자 함수 정의
 int main() {
-    BitSet s1, s2("mathematicsssss"), s3, s4;
+    BitSet s1, s2("mathematics"), s3, s4;
     
     s3 = s3 + 't' + 'e' + 's' + 't' + 'i' + 'n' + 'g'; //원소 삽입
     cout << "s1 = " << s1 << "\ns2 = " << s2 << "\ns3 = " << s3 << "\n\n";

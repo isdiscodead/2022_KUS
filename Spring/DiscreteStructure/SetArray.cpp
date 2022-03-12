@@ -135,9 +135,15 @@ Set Set::operator&(Set op2) {
 bool operator<=(Set op1, Set op2) {
     bool result = true;
     for (int i=0 ; i < op1.size ; i++ ) {
+        if ( ! result ) {
+            break;
+        }
         for ( int j=0 ; j < op2.size ; j++ ) {
             if ( op1.p[i] != op2.p[j] ) {
                 result = false;
+            } else {
+                result = true;
+                break;
             }
         }
     }
@@ -147,19 +153,63 @@ bool operator<=(Set op1, Set op2) {
 
 // 여집합(전체 집합 = 소문자 전체)
 Set operator~(Set s) {
+    // 여집합 사이즈만큼으로 동적 할당
+    char *alpha;
+    int size = 26 - s.size;
+    alpha = new char[size];
+    int code = 'a';
 
+    for (int i=0 ; i<size ; i++ ) {
+        bool flag = false;
+        for (int j=0 ; j<s.size ; j++ ) {
+            if ( code == s.p[j] ) {
+                flag = true;
+            }
+        }
+        if ( !flag ) {
+            alpha[i] = code;
+        } else {
+            i--;
+        }
+        code ++;
+    }
+
+    Set result(alpha);
+    return result;
 }               
 
 
 // 차집합
 Set operator-(Set op1, Set op2) {
+    // 교집합을 구한 다음 op1에서 교집합에 포함되는 애 삭제 ... 
+    Set inter = op1&op2;
+    char *tmp;
+    int size = op1.size - inter.size;
+    tmp = new char[size];
+    int idx = 0;
 
+    for (int i=0 ; i<op1.size ; i++ ) {
+        bool flag = false; 
+        for (int j=0 ; j<inter.size ; j++ ) {
+            if ( op1.p[i] == inter.p[j] ) {
+                flag = true;
+            }
+        }
+        if ( !flag ) {
+            tmp[idx] = op1.p[i];
+            cout << op1.p[i];
+            idx++;
+        }
+    }   
+
+    Set result(tmp);
+    return result;
 }   
 
 
 
 int main() {
-    Set s1, s2("mathematicsssss"), s3, s4;
+    Set s1, s2("mathematics"), s3, s4;
     
     s3 = s3 + 't' + 'e' + 's' + 't' + 'i' + 'n' + 'g'; //원소 삽입
     cout << "s1 = " << s1 << "\ns2 = " << s2 << "\ns3 = " << s3 << "\n\n";
@@ -180,6 +230,8 @@ int main() {
         cout << s2 << " ⊆ " << s1 << "\n\n";
     if (!(s2 <= s3))
         cout << s2 << " is not susbset of " << s3 << "\n\n";
+
+    // 근데 함수 내에서 동적할당 받은 애들 반환 어케하지? ㅠㅠ 따로 안 해도 되나
     
     return 0;
 }
