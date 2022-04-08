@@ -10,6 +10,7 @@
         "streambuf": "cpp",
         "string": "cpp",
         "new": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "iostream": "cpp"
     }
 }
