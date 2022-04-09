@@ -39,6 +39,7 @@ public:
     // add operator function
     friend linked_term* add(linked_term* op1, linked_term* op2) {
         linked_term* result = new linked_term(0,0,NULL);
+        linked_term* result_head = result;
         
         while ( op1->link && op2->link ) { // 둘 다 남아있을 때 
             // 같은 지수항일 경우
@@ -64,8 +65,6 @@ public:
                 op2 = op2->link;
             }
 
-            cout << result->get_coef() << "x^" << result->get_exp() << " "; 
-
             // 다음 result 노드 추가
             result->link = new linked_term(0,0,result);
             result = result->link;
@@ -83,31 +82,37 @@ public:
                 op2 = op2->link;
             }
 
-            cout << result->get_coef() << "x^" << result->get_exp() << " "; 
-
             // 추가 후 result 노드 추가
             result = new linked_term(0,0,result);
             result = result->link;
         }
 
         // 마지막 항 
+            result->link = NULL;
             if ( op1 && op2 ) {
                 result->exp = op1->exp;
                 result->coef = op1->coef + op2->coef;
             } else {
-                if ( op1 ) {
-                result->exp = op1->exp;
-                result->coef = op1->coef;
-            } 
-                if ( op2 ) {
-                result->exp = op2->exp;
-                result->coef = op2->coef;
+                    if ( op1 ) {
+                    result->exp = op1->exp;
+                    result->coef = op1->coef;
+                } 
+                    if ( op2 ) {
+                    result->exp = op2->exp;
+                    result->coef = op2->coef;
+                }
             }
-            }
-            
-            cout << result->get_coef() << "x^" << result->get_exp() << " "; 
         
-        return result;
+        return result_head;
+    }
+
+    void print_poly() {
+        linked_term* tmp = this;
+        while( tmp->link ) {
+            cout << tmp->get_coef() << "x^" << tmp->get_exp() << " + "; 
+            tmp = tmp->link;
+        }
+        cout << tmp->get_coef() << "x^" << tmp->get_exp() ; // 마지막 항
     }
 
 private:
@@ -123,9 +128,10 @@ void linked_term_insert( const float &coef, const int &exp, linked_term* &previo
 }
 
 
+// list로 구현 ... 추후 진행 예정
 class term {
 public: 
-    term(const float &coef, const int &expk) {
+    term(const float &coef, const int &exp) {
         this->coef = coef;
         this->exp = exp;
     }
@@ -162,30 +168,31 @@ private:
 
 
 int main(void) {
-    linked_term* op1 = NULL; // head
-    linked_term* op2 = NULL; // head 
+    linked_term* head1 = NULL; // head
+    linked_term* head2 = NULL; // head 
     linked_term* tail1 = NULL;
     linked_term* tail2 = NULL;
 
-    term* op1_arr = NULL;
-    term* op2_arr = NULL;
-
     // -3x^3 +5x^2 -7x +9 
-    op1 = new linked_term(-3, 3, op1);
-    tail1 = op1;
+    head1 = new linked_term(-3, 3, head1);
+    tail1 = head1;
     linked_term_insert(5, 2, tail1);
     linked_term_insert(-7, 1, tail1);
     linked_term_insert(9, 0, tail1);
-    cout << endl;
+    head1->print_poly();
+    cout << " add ";
 
     // 2x^2 +7x -4
-    op2 = new linked_term(2, 2, op2);
-    tail2 = op2;
+    head2 = new linked_term(2, 2, head2);
+    tail2 = head2;
     linked_term_insert(7, 1, tail2);
     linked_term_insert(-4, 0, tail2);
-    cout << endl;
+    head2->print_poly();
+    cout << " = ";
 
-    linked_term* result = add(op1, op2);
+    // -3x^3 +7x^2 +5
+    linked_term* result = add(head1, head2);
+    result->print_poly();
 
     return 0;
 }
