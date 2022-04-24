@@ -24,7 +24,7 @@ void exchange_sort( int* arr, int n ) {
 // input : arr, n
 // output : arr
 // min_idx사용하여 바깥 for문마다 변경, 앞부분은 이미 정렬되었으므로 j=i+1 시작
-void select_sort( int* &arr, int n ) {
+void select_sort( int* arr, int n ) {
     for ( int i=0 ; i<n ; i++ ) {
         int min_idx = i;
         for ( int j=i+1 ; j<n ; j++ ) {
@@ -44,7 +44,7 @@ void select_sort( int* &arr, int n ) {
 // output : arr
 // 새로 삽입할 i번째 값을 x로 두고 for문 돌리면서 하나씩 미뤄서 끼워넣기
 // i-1부터 탐색하므로 값을 덮어써도 사라지는 값 없이 되는 것 !! 
-void insert_sort(int* &arr, int n) {
+void insert_sort(int* arr, int n) {
     for ( int i=1 ; i<n ; i++ ) {
         int x = arr[i];
         int j;
