@@ -25,6 +25,8 @@ int main(void) {
     }
 
     // input 
+    // stoi() 또는 scanf("%1d", num) 사용 가능 ... 
+    // 근데 그냥 c++만 쓰고 싶어서 로직으로 풀었슴니다
     cout << "relation R의 행렬 입력: " << endl;
     for ( int i=0 ; i<size ; i++ ) {
         cin >> str;
@@ -127,7 +129,6 @@ bool is_transitive(int** A, int n) {
     for( int i=0 ; i<n ; i++ ) {
         for ( int j=0 ; j<n ; j++ ) {
             if ( C[i][j] && (!A[i][j]) )  {
-                cout << C[i][j] << A[i][j] << endl;
                 return false;
             }
         }
