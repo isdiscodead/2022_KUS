@@ -20,7 +20,8 @@
         "unordered_map": "cpp",
         "vector": "cpp",
         "iterator": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "__node_handle": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
