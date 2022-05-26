@@ -2,7 +2,7 @@ from random import randint
 import time
 
 def random_weight(n):
-    weights = [randint(1, 20) for i in range(n)]
+    weights = [randint(1, 17) for i in range(n)]
     return weights
 
 def random_value(n): 
@@ -117,8 +117,40 @@ def fractional_knapsack_dp():
 
 
 
+# DP 2 ( 개선 ... )
+def fractional_knapsack_dp2(): 
+    global resValue
+
+    # 각 size W를 넘지 않는 상태에서, i개의 아이템을 담은 상태에서 최대 profit을 담는 배열 
+    P = [ [0 for x in range(W+1)] for x in range(n+1)] # [n+1][W+1] 0으로 초기화 
+
+    for i in range(n+1):
+        currWeight = 0
+        for w in range(W+1):
+            if i==0 or w==0: # 0행 또는 0열은 skip 
+                P[i][w] = 0;
+
+            elif weights[i-1] <= w:
+                currWeight = weights[i-1]
+                P[i][w] = max( values[i-1] + P[i-1][w - weights[i-1]], P[i-1][w] )
+
+            else:
+                # weight 1 단위로 설정  ... dksl d어케함 ;;
+                frac = 1 / weights[i-1]
+                if ( frac*values[i-1] + P[i-1][w - 1] > P[i-1][w] ) :
+                    P[i][w] = P[i-1][w-1]
+                    for k in range(w - currWeight) :
+                        currWeight += 1
+                        P[i][w] += frac*values[i-1]
+                else : 
+                    P[i][w] = P[i-1][w]
+
+    resValue = P[n][W]
+
+
+
 # 문제 정의 
-weights = random_weight(7)
+weights = random_weight(5)
 n = len(weights)
 values = random_value(n)
 
@@ -132,7 +164,7 @@ fractional_knapsack_naive(0, 0, [0 for i in range(n)], [False for i in range(n)]
 end = time.time()
 print("### Naive Approach ####")
 print("Maximum profit:",resValue)
-print("Time: %.5f" % (end - start))
+print("Time: %.8f" % (end - start))
 
 
 # results of greedy approach
@@ -142,14 +174,16 @@ fractional_knapsack_greedy()
 end = time.time()
 print("\n### Greedy Approach ####")
 print("Maximum profit:",resValue)
-print("Time: %.5f" % (end - start))
+print("Time: %.8f" % (end - start))
 
+arr = [1,2,3,4,5]
+arr.sort()
 
 # results of dp
 resValue=0 # 최종 value
 start = time.time()
-fractional_knapsack_dp()
+fractional_knapsack_dp2()
 end = time.time()
 print("\n### Dynamic Programming ####")
 print("Maximum profit:",resValue)
-print("Time: %.5f" % (end - start))
+print("Time: %.8f" % (end - start))
