@@ -150,7 +150,7 @@ def fractional_knapsack_dp2():
 
 
 # 문제 정의 
-weights = random_weight(5)
+weights = random_weight(6)
 n = len(weights)
 values = random_value(n)
 
@@ -167,6 +167,7 @@ print("Maximum profit:",resValue)
 print("Time: %.8f" % (end - start))
 
 
+
 # results of greedy approach
 resValue=0 # 최종 value
 start = time.time()
@@ -178,6 +179,7 @@ print("Time: %.8f" % (end - start))
 
 arr = [1,2,3,4,5]
 arr.sort()
+
 
 # results of dp
 resValue=0 # 최종 value
