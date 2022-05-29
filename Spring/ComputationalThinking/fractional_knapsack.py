@@ -66,7 +66,7 @@ def fractional_knapsack_naive(currWeight, currValue, items, visited):
             visited[i] = False
             items[i] = 0
 
-        # i번째 노드로 시작하는 subtree 탐색 종료! i를 방문한 노드로 표시 후 재귀 호출 -> i+1 시작 탐색 
+        # i번째 아이템 담지 않는 경우! i를 방문한 노드로 표시 후 재귀 호출 -> i+1 시작 탐색 
         visited[i] = True
         fractional_knapsack_naive(currWeight,currValue,items,visited)
         visited[i] = False
@@ -121,7 +121,7 @@ def fractional_knapsack_dp():
 def fractional_knapsack_dp2(): 
     global resValue
 
-    # 각 size W를 넘지 않는 상태에서, i개의 아이템을 담은 상태에서 최대 profit을 담는 배열 
+    # 각 size W를 넘지 않는 상태에서, i번째 까지의 아이템 중 최대 profit을 담는 배열 
     P = [ [0 for x in range(W+1)] for x in range(n+1)] # [n+1][W+1] 0으로 초기화 
 
     for i in range(n+1):
@@ -135,8 +135,7 @@ def fractional_knapsack_dp2():
                 P[i][w] = max( values[i-1] + P[i-1][w - weights[i-1]], P[i-1][w] )
 
             else:
-                # weight 1 단위로 설정  ... dksl d어케함 ;;
-                frac = 1 / weights[i-1]
+                frac = 1 / weights[i-1] # weight = 1 단위로 설정 
                 if ( frac*values[i-1] + P[i-1][w - 1] > P[i-1][w] ) :
                     P[i][w] = P[i-1][w-1]
                     for k in range(w - currWeight) :
@@ -147,6 +146,8 @@ def fractional_knapsack_dp2():
 
     resValue = P[n][W]
 
+
+# 새 점화식 세워야 ... 어떻게 해야되지 ㅠㅠ 
 
 
 # 문제 정의 
@@ -177,8 +178,6 @@ print("\n### Greedy Approach ####")
 print("Maximum profit:",resValue)
 print("Time: %.8f" % (end - start))
 
-arr = [1,2,3,4,5]
-arr.sort()
 
 
 # results of dp
