@@ -15,6 +15,7 @@ public :
         this->right_son = right;
     }
 
+
     // getter 
     Item getKey() {
         return this->key_field;
@@ -37,25 +38,10 @@ public :
         this->right_son = right;
     }
 
-    // insert
-    void nodeInsert(BST_node<Item>* root, Item key) {
-        // key < root 
-        if ( key < root->getKey() ) {
-            if ( ! root->getLeftSon() ) {
-                root->setLeftSon(new BST_node<Item>(key, NULL, NULL));
-            } else {
-                nodeInsert(root->getLeftSon(), key);
-            }
-        } else { // key > root
-            if ( ! root->getRightSon() ) {
-                root->setRightSon(new BST_node<Item>(key, NULL, NULL));
-            } else {
-                nodeInsert(root->getRightSon(), key);
-            }
-        }
-    }
 
-    /*
+
+
+
     // delete
     void nodeDelete(BST_node<Item>* root, BST_node<Item>* parent, Item target) {
         BST_node<Item>* ptr;
@@ -128,7 +114,7 @@ public :
         }
         
     }
-    */
+
 
 private : 
     Item key_field;
@@ -187,9 +173,10 @@ int main(void) {
     inorder(root);
 
     BST_node<string>* searched =  search(root, string("the"));
-    // cout << endl << searched->getKey();
+    cout << endl << searched->getKey() << endl;
 
-    // root->nodeDelete(root, root, "in");
+    root->nodeDelete(root, root, "in");
+    inorder(root);
 
     return 0;
 }
