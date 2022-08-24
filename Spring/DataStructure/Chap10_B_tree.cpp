@@ -146,91 +146,75 @@ void insert(int a) {
     }
 
     // 루트 노드가 NULL이 아니라면
-    else
-    {
+    else {
+        // 현재 리프노드이고 크기가 꽉찼다면
+        if(x->leaf == true && x->n == M) {
+            temp = splitChild(x, -1);
+            x = root;
 
-    // 현재 리프노드이고 크기가 꽉찼다면
-    if(x->leaf == true && x->n == M)
-    {
-    temp = splitChild(x, -1);
-    x = root;
+            // 값을 이동하며 삽입될 자리를 찾습니다.
+            for(i = 0; i < (x->n); i++){
+                if((a > x->data[i]) && (a < x->data[i + 1]))
+                {
+                i++;
+                break;
+                }
+                else if(a < x->data[0])
+                {
+                break;
+                }
+                else
+                {
+                continue;
+                }
+            }
+            x = x->childPtr[i];
+        }
+        // 리프노드가 아닐 때입니다.
+        else {
+            // 리프 노드까지 이동합니다.
+            while(x->leaf == false) {
+                for(i = 0; i < (x->n); i++) {
+                    if((a > x->data[i]) && (a < x->data[i + 1])) {
+                        i++;
+                        break;
+                    } else if(a < x->data[0]) {
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
 
-    // 값을 이동하며 삽입될 자리를 찾습니다.
-    for(i = 0; i < (x->n); i++)
-    {
-        if((a > x->data[i]) && (a < x->data[i + 1]))
-        {
-        i++;
-        break;
-        }
-        else if(a < x->data[0])
-        {
-        break;
-        }
-        else
-        {
-        continue;
-        }
-    }
-    x = x->childPtr[i];
-    }
+                // 리프 노드 위에서도 만약에 최대치를 넘으면 분할해줍니다.
+                if((x->childPtr[i])->n == M) {
+                    temp = splitChild(x, i);
+                    x->data[x->n] = temp;
+                    x->n++;
+                    continue;
 
-    // 리프노드가 아닐 때입니다.
-    else
-    {
-
-    // 리프 노드까지 이동합니다.
-    while(x->leaf == false)
-    {
-        for(i = 0; i < (x->n); i++)
-        {
-        if((a > x->data[i]) && (a < x->data[i + 1]))
-        {
-        i++;
-        break;
+                } else {
+                    x = x->childPtr[i];
+                }
+            }
         }
-        else if(a < x->data[0])
-        {
-        break;
-        }
-        else
-        {
-        continue;
-        }
-        }
-
-        // 리프 노드 위에서도 만약에 최대치를 넘으면 분할해줍니다.
-        if((x->childPtr[i])->n == M)
-        {
-        temp = splitChild(x, i);
-        x->data[x->n] = temp;
-        x->n++;
-        continue;
-        }
-        else
-        {
-        x = x->childPtr[i];
-        }
-    }
-    }
     }
     x->data[x->n] = a;
     sort(x->data, x->n);
     x->n++;
 }
 
-int main(void)
-{
- int i, n, t;
- cout << "삽입할 원소의 개수를 입력하세요 : ";
- cin >> n;
- for(i = 0; i < n; i++)
- {
-  cout << "원소를 입력하세요 : ";
-  cin >> t;
-  insert(t);
- }
- cout << "트리를 순회합니다." << endl;
- traverse(root);
- return 0;
+int main(void) {
+    int i, n, t;
+    cout << "삽입할 원소의 개수를 입력하세요 : ";
+    cin >> n;
+
+    for(i = 0; i < n; i++) {
+        cout << "원소를 입력하세요 : ";
+        cin >> t;
+        insert(t);
+    }
+    
+    cout << "트리를 순회합니다." << endl;
+    traverse(root);
+    return 0;
 }
