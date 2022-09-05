@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#include <iomanip> // setw() 사용을 위함 
 
 // 운영체제 프로그래밍 과제 1 : 구구단 테이블 
 // 2021270660 이지원
@@ -9,37 +10,37 @@ using namespace std;
 // dan 수만큼의 세로 길이를 가지게 됨 
 
 int main(void) {
-    // 블록 변경을 위한 block 변수
-    int max = 12;
-    int mul = 0;
-    int dan = 1;
-    int line = 1;
+    cout.setf(ios::left); // setw 왼쪽 정렬 
     
-    for ( int i=1 ; dan < max ; i++ ) {
-        for ( int j=1 ; j <= 5 ; j++ ) {
-            // 단 수보다 더 높은 수와의 곱셈은 생략 
-            if ( j + mul < i ) {
-                cout << "\t\t\t\t";
-                continue;
-            } 
+    int max = 12;
+    int line = 0;
+    int cnt = 1;
+    int i, j;
 
-            // 출력 
-            cout << j + mul << " x " << i << " = " << (j + mul) * i << "\t\t";
+    for ( j=1 ; j<=line+5 ; j++ ) { // 행 바꿈 
+
+        if ( line>max ) {
+            return 0;
+        }
+		
+        for ( i=line+1 ; i<=max ; i++ ) { // 열 바꿈 
+            if ( i>=j && cnt<=5 ) { // 단을 넘어가지 않는 한에서 5줄 출력  
+                cout << i << " x " << setw(3) << j << " = " << setw(8) << j * i;
+
+            } else if ( cnt <= 5 ) { // 단을 넘어갈 경우 출력 생략 
+                cout << "                  ";
+            }
+            cnt++; // 한 행 출력 완료 
         }
 
         cout << endl;
+        cnt=1; // 다음 행 출력을 위한 초기화 
 
         // 하나의 블록에 5개의 단까지만 출력되도록 처리 
-        if ( i == mul + 5 ) {
+        if ( j == line + 5 ) {
             line += 5;
-            mul += 5;
             cout << "\n\n";
-            i = 1;
-        }
-
-        // dan 증가 처리 
-        if ( dan < mul + 5 ) {
-            dan ++;
+            j = 0;
         }
     }
 }

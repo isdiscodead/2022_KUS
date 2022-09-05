@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "__locale": "cpp",
+        "__bit_reference": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "unordered_map": "cpp",
+        "algorithm": "cpp"
     }
 }
