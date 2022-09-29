@@ -300,7 +300,7 @@ plot(pX)
 
 
 ## Self-Checking 2
-# 동시에 4개의 주사위 던짐 
+# 동시에 4개의 주사위 던짐 ... 
 nTimes <- 4
 
 S <- rolldie2(nTimes)
