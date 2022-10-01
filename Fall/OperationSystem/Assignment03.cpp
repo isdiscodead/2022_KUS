@@ -56,6 +56,7 @@ double cpu() {
    return delta;
 }
 
+
 // 현재 시간을 출력하는 함수 
 void printCurTime() {
    SYSTEMTIME lt;
@@ -74,6 +75,7 @@ void printCurTime() {
    cout.width(2);
    cout << lt.wSecond << " -> ";
 }
+
 
 double getAvgCPU(double total[], int n, int k) {
    double  sum = 0;
@@ -98,11 +100,13 @@ double getAvgCPU(double total[], int n, int k) {
    return sum / n;
 }
 
+
 void printNumCPU() {
    SYSTEM_INFO info;
    GetSystemInfo(&info); 
    cout << "Number of CPU's : " << info.dwNumberOfProcessors << endl;
 }
+
 
 int main(void) {
    double total[15] = { 0, };
